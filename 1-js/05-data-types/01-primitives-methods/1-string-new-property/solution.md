@@ -1,24 +1,24 @@
 
-Try running it:
+Încercați să îl rulați:
 
-```js run
-let str = "Hello";
+```cod js 
+let str = "Buna";
 
 str.test = 5; // (*)
 
 alert(str.test);
 ```
 
-Depending on whether you have `use strict` or not, the result may be:
-1. `undefined` (no strict mode)
-2. An error (strict mode).
+În funcție de faptul că aveți „utilizare strictă” sau nu, rezultatul poate fi:
+1. `nedefinit` (fără mod strict)
+2. O eroare (mod strict).
 
-Why? Let's replay what's happening at line `(*)`:
+De ce? Să reluăm ceea ce se întâmplă la rândul „(*)”:
 
-1. When a property of `str` is accessed, a "wrapper object" is created.
-2. In strict mode, writing into it is an error.
-3. Otherwise, the operation with the property is carried on, the object gets the `test` property, but after that the "wrapper object" disappears, so in the last line `str` has no trace of the property.
+1. Când o proprietate a lui `str` este accesată, este creat un „obiect wrapper”.
+2. În modul strict, scrierea în el este o eroare.
+3. În caz contrar, se continuă operația cu proprietatea, obiectul primește proprietatea `test`, dar după aceea "obiectul wrapper" dispare, deci în ultima linie `str` nu are nicio urmă a proprietății.
 
-**This example clearly shows that primitives are not objects.**
+**Acest exemplu arată clar că primitivele nu sunt obiecte.**
 
-They can't store additional data.
+Nu pot stoca date suplimentare.
