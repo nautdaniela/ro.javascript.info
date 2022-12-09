@@ -1,18 +1,18 @@
-importance: 5
+importanţă: 5
 
 ---
 
-# Can I add a string property?
+# Pot adăuga o proprietate șir?
 
 
-Consider the following code:
+Luați în considerare următorul cod:
 
 ```js
-let str = "Hello";
+let str = "Buna";
 
 str.test = 5;
 
 alert(str.test);
 ```
 
-How do you think, will it work? What will be shown?
+Cum crezi, va funcționa? Ce se va afișa?
