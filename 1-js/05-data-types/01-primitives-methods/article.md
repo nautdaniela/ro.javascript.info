@@ -1,128 +1,126 @@
-# Methods of primitives
+# Metode ale primitivelor
 
-JavaScript allows us to work with primitives (strings, numbers, etc.) as if they were objects. They also provide methods to call as such. We will study those soon, but first we'll see how it works because, of course, primitives are not objects (and here we will make it even clearer).
+JavaScript ne permite să lucrăm cu primitive (șiruri, numere etc.) ca și cum ar fi obiecte. Ele oferă, de asemenea, metode de apel ca atare. Le vom studia în curând, dar mai întâi vom vedea cum funcționează pentru că, desigur, primitivele nu sunt obiecte (și aici vom face și mai clar).
 
-Let's look at the key distinctions between primitives and objects.
+Să ne uităm la distincțiile cheie dintre primitive și obiecte.
 
-A primitive
+Un primitiv
 
-- Is a value of a primitive type.
-- There are 7 primitive types: `string`, `number`, `bigint`, `boolean`, `symbol`, `null` and `undefined`.
+- Este o valoare de tip primitiv.
+- Există 7 tipuri primitive: `șir`, `număr`, `bigint`, `boolean`, `simbol`, `null` și `nedefined`.
 
-An object
+Un obiect
 
-- Is capable of storing multiple values as properties.
-- Can be created with `{}`, for instance: `{name: "John", age: 30}`. There are other kinds of objects in JavaScript: functions, for example, are objects.
+- Este capabil să stocheze mai multe valori ca proprietăți.
+- Poate fi creat cu `{}`, de exemplu: `{nume: "Ioan", vârsta: 30}`. Există și alte tipuri de obiecte în JavaScript: funcțiile, de exemplu, sunt obiecte.
 
-One of the best things about objects is that we can store a function as one of its properties.
+Unul dintre cele mai bune lucruri despre obiecte este că putem stoca o funcție ca una dintre proprietățile sale.
 
-```js run
+```cod js 
 let john = {
-  name: "John",
+  name: "Ioan",
   sayHi: function() {
-    alert("Hi buddy!");
+    alert("Buna amice!");
   }
 };
 
-john.sayHi(); // Hi buddy!
+john.sayHi(); // Buna amice!
 ```
 
-So here we've made an object `john` with the method `sayHi`.
+Deci aici am creat un obiect `john` cu metoda `sayHi`.
 
-Many built-in objects already exist, such as those that work with dates, errors, HTML elements, etc. They have different properties and methods.
+Multe obiecte încorporate există deja, cum ar fi cele care lucrează cu date, erori, elemente HTML etc. Au proprietăți și metode diferite.
 
-But, these features come with a cost!
+Dar, aceste caracteristici vin cu un cost!
 
-Objects are "heavier" than primitives. They require additional resources to support the internal machinery.
+Obiectele sunt „mai grele” decât primitivele. Acestea necesită resurse suplimentare pentru a susține echipamentul intern.
 
-## A primitive as an object
+## Un primitiv ca obiect
 
-Here's the paradox faced by the creator of JavaScript:
+Iată paradoxul cu care se confruntă creatorul JavaScript:
 
-- There are many things one would want to do with a primitive like a string or a number. It would be great to access them using methods.
-- Primitives must be as fast and lightweight as possible.
+- Există multe lucruri pe care ar dori să le faci cu o primitivă, cum ar fi un șir sau un număr. Ar fi grozav să le accesați folosind metode.
+- Primitivele trebuie să fie cât mai rapide și ușoare.
 
-The solution looks a little bit awkward, but here it is:
+Soluția pare puțin incomodă, dar iată-o:
 
-1. Primitives are still primitive. A single value, as desired.
-2. The language allows access to methods and properties of strings, numbers, booleans and symbols.
-3. In order for that to work, a special "object wrapper" that provides the extra functionality is created, and then is destroyed.
+1. Primitivele sunt încă primitive. O singură valoare, după dorință.
+2. Limbajul permite accesul la metode și proprietăți ale șirurilor de caractere, numerelor, booleanelor și simbolurilor.
+3. Pentru ca acest lucru să funcționeze, este creat un „înveliș de obiect” special care oferă funcționalitatea suplimentară și apoi este distrus.
 
-The "object wrappers" are different for each primitive type and are called: `String`, `Number`, `Boolean`, `Symbol` and `BigInt`. Thus, they provide different sets of methods.
+„Învelișurile de obiecte” sunt diferite pentru fiecare tip primitiv și se numesc: `String`, `Number`, `Boolean`, `Symbol` și `BigInt`. Astfel, ele oferă seturi diferite de metode.
 
-For instance, there exists a string method [str.toUpperCase()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) that returns a capitalized `str`.
+De exemplu, există o metodă de șir [str.toUpperCase()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) care returnează un `str` cu majuscule.
 
-Here's how it works:
+Iată cum funcționează:
 
-```js run
-let str = "Hello";
+```cod js 
+let str = "Buna";
 
-alert( str.toUpperCase() ); // HELLO
+alert( str.toUpperCase() ); // BUNA
 ```
 
-Simple, right? Here's what actually happens in `str.toUpperCase()`:
+Simplu, nu? Iată ce se întâmplă de fapt în `str.toUpperCase()`:
 
-1. The string `str` is a primitive. So in the moment of accessing its property, a special object is created that knows the value of the string, and has useful methods, like `toUpperCase()`.
-2. That method runs and returns a new string (shown by `alert`).
-3. The special object is destroyed, leaving the primitive `str` alone.
+1. Șirul `str` este o primitivă. Deci, în momentul accesării proprietății sale, este creat un obiect special care cunoaște valoarea șirului și are metode utile, precum `toUpperCase()`.
+2. Metoda respectivă rulează și returnează un șir nou (afișat de `alert`).
+3. Obiectul special este distrus, lăsând în pace `str` primitiv.
 
-So primitives can provide methods, but they still remain lightweight.
+Deci primitivii pot oferi metode, dar rămân totuși ușoare.
 
-The JavaScript engine highly optimizes this process. It may even skip the creation of the extra object at all. But it must still adhere to the specification and behave as if it creates one.
+Motorul JavaScript optimizează foarte mult acest proces. Poate chiar sări peste crearea obiectului suplimentar. Dar trebuie să respecte specificațiile și să se comporte ca și cum ar crea una.
 
-A number has methods of its own, for instance, [toFixed(n)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) rounds the number to the given precision:
+Un număr are metode proprii, de exemplu, [toFixed(n)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) rotunjește numărul la precizia dată:
 
-```js run
+```cod js 
 let n = 1.23456;
 
 alert( n.toFixed(2) ); // 1.23
 ```
 
-We'll see more specific methods in chapters <info:number> and <info:string>.
+Vom vedea metode mai specifice în capitolele <informatii:numbere> și <informatii:siruri>.
 
+````warn header="Constructorii `String/Number/Boolean` sunt numai pentru uz intern"
+Unele limbaje precum Java ne permit să creăm în mod explicit „obiecte wrapper” pentru primitive folosind o sintaxă precum `new Number(1)` sau `new Boolean(false)`.
 
-````warn header="Constructors `String/Number/Boolean` are for internal use only"
-Some languages like Java allow us to explicitly create "wrapper objects" for primitives using a syntax like `new Number(1)` or `new Boolean(false)`.
+În JavaScript, acest lucru este posibil și din motive istorice, dar foarte **nerecomandat**. Lucrurile vor înnebuni în mai multe locuri.
 
-In JavaScript, that's also possible for historical reasons, but highly **unrecommended**. Things will go crazy in several places.
+De exemplu:
+```cod js
+alert( typeof 0 ); // "numar"
 
-For instance:
-
-```js run
-alert( typeof 0 ); // "number"
-
-alert( typeof new Number(0) ); // "object"!
+alert( typeof new Number(0) ); // "obiect"!
 ```
 
-Objects are always truthy in `if`, so here the alert will show up:
+Obiectele sunt întotdeauna adevărate în „if”, așa că aici va apărea alerta:
 
-```js run
+```cod js 
 let zero = new Number(0);
 
-if (zero) { // zero is true, because it's an object
-  alert( "zero is truthy!?!" );
+if (zero) { // zero este adevărat, pentru că este un obiect
+  alert( "zero este adevărat!?!" );
 }
 ```
 
-On the other hand, using the same functions `String/Number/Boolean` without `new` is a totally sane and useful thing. They convert a value to the corresponding type: to a string, a number, or a boolean (primitive).
+Pe de altă parte, folosirea acelorași funcții `String/Number/Boolean` fără `new` este un lucru total sănătos și util. Ele convertesc o valoare în tipul corespunzător: într-un șir, un număr sau un boolean (primitiv).
 
-For example, this is entirely valid:
+De exemplu, acest lucru este pe deplin valabil:
 ```js
-let num = Number("123"); // convert a string to number
+let num = Number("123"); // converti un șir în număr
 ```
 ````
 
 
-````warn header="null/undefined have no methods"
-The special primitives `null` and `undefined` are exceptions. They have no corresponding "wrapper objects" and provide no methods. In a sense, they are "the most primitive".
+````warn header="null/undefined nu au metode"
+Primitivele speciale `null` și `undefined` sunt excepții. Nu au „obiecte wrapper” corespunzătoare și nu oferă metode. Într-un fel, ei sunt „cei mai primitivi”.
 
-An attempt to access a property of such value would give the error:
+O încercare de a accesa o proprietate de asemenea valoare ar da eroarea:
 
 ```js run
-alert(null.test); // error
+alert(null.test); // eroare
 ````
 
-## Summary
+## Rezumat
 
-- Primitives except `null` and `undefined` provide many helpful methods. We will study those in the upcoming chapters.
-- Formally, these methods work via temporary objects, but JavaScript engines are well tuned to optimize that internally, so they are not expensive to call.
+- Primitivele cu excepția „null” și „undefined” oferă multe metode utile. Le vom studia în capitolele următoare.
+- În mod formal, aceste metode funcționează prin intermediul obiectelor temporare, dar motoarele JavaScript sunt bine reglate pentru a optimiza acest lucru în interior, deci nu sunt costisitoare de apelat.
